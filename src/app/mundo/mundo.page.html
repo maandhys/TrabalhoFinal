@@ -1,0 +1,65 @@
+<ion-header id='topo'>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Casos no Mundo </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [scrollEvents]="true">
+  <ion-card *ngFor="let item of mundoPage">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+            <img [src]="'assets/img/paises/png/' + item.country +  '.png' " />
+          </ion-col>
+          <ion-col>
+            <ion-card-subtitle> País </ion-card-subtitle>
+            <ion-card-title>{{ item.country }}</ion-card-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Casos Confirmados </ion-label> {{ item.confirmed }}
+        </ion-item>
+        <ion-item>
+          <ion-label>Casos Abertos </ion-label> {{ item.cases }}
+        </ion-item>
+        <ion-item>
+          <ion-label>Recuperados</ion-label> {{ item.recovered }}
+        </ion-item>
+        <ion-item> 
+          <ion-label>Óbitos</ion-label> {{ item.deaths }} 
+        </ion-item>
+        <ion-item>
+          <ion-label>Atualizado em:</ion-label> {{ item.updated_at |
+          date:'dd/MM/yyyy' }}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab
+    vertical="bottom"
+    (click)="ScrollToTop()"
+    horizontal="end"
+    slot="fixed"
+  >
+    <ion-fab-button color="primary">
+      <ion-icon color="secondary" name="arrow-up"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
